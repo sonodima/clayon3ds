@@ -2,10 +2,8 @@
 
 Just because we can.
 
-## Issues
+## Known Issues
 
-- Short strings often won't render _(this also happens with text wrapping)_
-- Scissoring is not perfect _(works perfectly with texts, breaks down when the children are rectangles)_
 - Inputs are handled on mouse down _(which is in conflict with scrollable containers)_
 
 ## Compiling
