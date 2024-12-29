@@ -98,22 +98,29 @@ Clay_RenderCommandArray bottomLayout(void)
       CLAY_LAYOUT({
         .sizing = SIZING_GROW,
         .layoutDirection = CLAY_TOP_TO_BOTTOM,
-        .padding = { .x = 8, .y = 6 },
-        .childGap = 4
+        .padding = { .x = 3, .y = 3 }
       })
     ) {
       for (u32 i = 0; i < NUM_CITIES; ++i)
       {
         CLAY(
           Clay_OnHover(onCityInteraction, (intptr_t)i),
-          CLAY_TEXT(
-            CITIES[i].name,
-            CLAY_TEXT_CONFIG({ .textColor = COLOR_TEXT, .fontSize = 16 })
-          ),
+          CLAY_RECTANGLE({ .color = curCityIndex == i ? COLOR_PRI_L : COLOR_TRNS }),
           CLAY_LAYOUT({
-            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIT() }
+            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIT() },
+            .padding = { .x = 4, .y = 2 }
           })
-        ) {}
+        ) {
+          CLAY(
+            CLAY_TEXT(
+              CITIES[i].name,
+              CLAY_TEXT_CONFIG({
+                .textColor = curCityIndex == i ? COLOR_BLK : COLOR_PRI_L,
+                .fontSize = 16
+              })
+            )
+          ) {}
+        }
       }
     }
 

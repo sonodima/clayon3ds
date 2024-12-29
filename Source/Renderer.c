@@ -27,7 +27,7 @@ Clay_Dimensions clayMeasureText(Clay_String* string, Clay_TextElementConfig* con
 	cloned[string->length] = '\0';
 
 	C2D_Text text;
-	C2D_TextBuf buffer = C2D_TextBufNew(string->length);
+	C2D_TextBuf buffer = C2D_TextBufNew(string->length + 1);
 	C2D_TextParse(&text, buffer, cloned);
 	C2D_TextOptimize(&text);
 
@@ -91,7 +91,7 @@ void clayRender(C3D_RenderTarget* renderTarget, Clay_Dimensions dimensions, Clay
 
 				C2D_Text text;
 				// TODO: re-use the same buffer for performance.
- 				C2D_TextBuf buffer = C2D_TextBufNew(string.length);
+ 				C2D_TextBuf buffer = C2D_TextBufNew(string.length + 1);
 				C2D_TextParse(&text, buffer, cloned);
 				C2D_TextOptimize(&text);
 				C2D_DrawText(&text, C2D_WithColor, bbox.x, bbox.y, 0.f, scale, scale, CLAY_COLOR_TO_C2D(config->textColor));

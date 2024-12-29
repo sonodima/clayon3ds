@@ -112,11 +112,6 @@ static CityData CITIES[] =
     .introduction = CLAY_STRING("Brussels, Belgium’s capital, is famous for its mix of French and Flemish culture, and for landmarks like the Grand Place and Atomium."),
     .highlights = CLAY_STRING("Points of Interest:\n- Grand Place\n- Atomium\n- Manneken Pis\nDishes:\n- Belgian Waffles\n- Frites\n- Moules-Frites"),
   },
-  {
-    .name = CLAY_STRING("Kraków"),
-    .introduction = CLAY_STRING("Kraków, one of Poland's oldest cities, is known for its medieval architecture and landmarks like Rynek Główny and the poignant Auschwitz-Birkenau memorial."),
-    .highlights = CLAY_STRING("Points of Interest:\n- Rynek Główny\n- Wawel Castle\n- Auschwitz-Birkenau\nDishes:\n- Pierogi\n- Kielbasa\n- Żurek"),
-  }
 };
 
 #define NUM_CITIES (sizeof(CITIES) / sizeof(CityData))

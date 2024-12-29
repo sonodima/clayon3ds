@@ -3,6 +3,7 @@
 
 #include <clay.h>
 
+static const Clay_Color COLOR_TRNS = (Clay_Color){ 0, 0, 0, 0 };
 static const Clay_Color COLOR_BLK = (Clay_Color){ 18, 18, 18, 255 };
 static const Clay_Color COLOR_SURF = (Clay_Color){ 32, 32, 32, 255 };
 static const Clay_Color COLOR_TEXT = (Clay_Color){ 255, 248, 193, 255 };
