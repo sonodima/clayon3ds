@@ -6,9 +6,17 @@
 #include "Constants.h"
 #include "Components/Include.h"
 
+// ===========================
+// Shared State
+// ===========================
+
 static bool showInfo = true;
 static bool hideStatusBar = false;
 static u32 curCityIndex = 0;
+
+// ===========================
+// Top Screen
+// ===========================
 
 Clay_RenderCommandArray topLayout(void)
 {
@@ -71,6 +79,10 @@ Clay_RenderCommandArray topLayout(void)
   return Clay_EndLayout();
 }
 
+// ===========================
+// Bottom Screen
+// ===========================
+
 Clay_String CityList_NameFetcher(u32 index)
 {
   return CITIES[index].name;
@@ -99,6 +111,7 @@ Clay_RenderCommandArray bottomLayout(void)
     ListView(CityList_NameFetcher, CityList_OnInteraction, NUM_CITIES, curCityIndex);
 
     CLAY(
+      CLAY_ID("CONTROLS_VIEW"),
       CLAY_LAYOUT({
         .sizing = SIZING_GROW,
         .layoutDirection = CLAY_TOP_TO_BOTTOM,
