@@ -4,7 +4,7 @@
 
 #include "Constants.h"
 
-void onToggleButtonInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
+void ToggleButton_OnInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
 {
   if (pointer.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
   {
@@ -19,7 +19,7 @@ void onToggleButtonInteraction(Clay_ElementId element, Clay_PointerData pointer,
 void ToggleButton(Clay_String text, bool* value)
 {
   CLAY(
-    Clay_OnHover(onToggleButtonInteraction, (intptr_t)value),
+    Clay_OnHover(ToggleButton_OnInteraction, (intptr_t)value),
     CLAY_BORDER_OUTSIDE({ .width = 1, .color = COLOR_PRI_L }),
     CLAY_RECTANGLE({ .color = value != NULL && *value ? COLOR_PRI_L : COLOR_BLK }),
     CLAY_LAYOUT({

@@ -22,6 +22,7 @@ target_sources(ClayOn3DS PRIVATE
   "${SOURCE_DIR}/Renderer.c"
   "${SOURCE_DIR}/Renderer.h"
   "${SOURCE_DIR}/Components/Include.h"
+  "${SOURCE_DIR}/Components/ListView.c"
   "${SOURCE_DIR}/Components/StatusBar.c"
   "${SOURCE_DIR}/Components/ToggleButton.c")
 target_include_directories(ClayOn3DS PRIVATE

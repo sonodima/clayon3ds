@@ -71,7 +71,12 @@ Clay_RenderCommandArray topLayout(void)
   return Clay_EndLayout();
 }
 
-void onCityInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
+Clay_String CityList_NameFetcher(u32 index)
+{
+  return CITIES[index].name;
+}
+
+void CityList_OnInteraction(Clay_ElementId, Clay_PointerData pointer, intptr_t data)
 {
   if (pointer.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
   {
@@ -91,38 +96,7 @@ Clay_RenderCommandArray bottomLayout(void)
       .childGap = 8,
     })
   ) {
-    CLAY(
-      CLAY_RECTANGLE({ .color = COLOR_SURF }),
-      CLAY_BORDER_OUTSIDE({ .width = 1, .color = COLOR_PRI_L }),
-      CLAY_SCROLL({ .vertical = true }),
-      CLAY_LAYOUT({
-        .sizing = SIZING_GROW,
-        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-        .padding = { .x = 3, .y = 3 }
-      })
-    ) {
-      for (u32 i = 0; i < NUM_CITIES; ++i)
-      {
-        CLAY(
-          Clay_OnHover(onCityInteraction, (intptr_t)i),
-          CLAY_RECTANGLE({ .color = curCityIndex == i ? COLOR_PRI_L : COLOR_TRNS }),
-          CLAY_LAYOUT({
-            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIT() },
-            .padding = { .x = 4, .y = 2 }
-          })
-        ) {
-          CLAY(
-            CLAY_TEXT(
-              CITIES[i].name,
-              CLAY_TEXT_CONFIG({
-                .textColor = curCityIndex == i ? COLOR_BLK : COLOR_PRI_L,
-                .fontSize = 16
-              })
-            )
-          ) {}
-        }
-      }
-    }
+    ListView(CityList_NameFetcher, CityList_OnInteraction, NUM_CITIES, curCityIndex);
 
     CLAY(
       CLAY_LAYOUT({
