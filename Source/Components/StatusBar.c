@@ -1,6 +1,7 @@
 #include "Include.h"
 
 #include "Constants.h"
+#include "Theme.h"
 
 void StatusBar(void)
 {
@@ -17,7 +18,7 @@ void StatusBar(void)
     CLAY(
       CLAY_TEXT(
         CLAY_STRING("ClayOn3DS by sonodima"),
-        CLAY_TEXT_CONFIG({ .textColor = COLOR_PRI, .fontSize = 14 })
+        CLAY_TEXT_CONFIG({ .textColor = THCOL(PRIMARY), .fontSize = 14 })
       )
     ) {}
   }

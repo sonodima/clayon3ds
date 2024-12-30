@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "Constants.h"
+#include "Theme.h"
 
 void ToggleButton_OnInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
 {
@@ -29,12 +30,12 @@ void ToggleButton(Clay_String text, bool* value)
     CLAY(
       CLAY_BORDER_OUTSIDE({
         .width = 1,
-        .color = value != NULL && *value ? COLOR_PRI : COLOR_BASE_CON
+        .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT)
       }),
       CLAY_LAYOUT({ .sizing = SIZING_FIT, .padding = { .x = 2, .y = 2 } })
     ) {
       CLAY(
-        CLAY_RECTANGLE({ .color = value != NULL && *value ? COLOR_PRI : COLOR_TRNS }),
+        CLAY_RECTANGLE({ .color = value != NULL && *value ? THCOL(PRIMARY) : (Clay_Color){} }),
         CLAY_LAYOUT({
           .sizing = {
             .width = CLAY_SIZING_FIXED(10),
@@ -48,7 +49,7 @@ void ToggleButton(Clay_String text, bool* value)
       CLAY_TEXT(
         text,
         CLAY_TEXT_CONFIG({
-          .textColor = value != NULL && *value ? COLOR_PRI : COLOR_BASE_CON,
+          .textColor = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT),
           .fontSize = 16
         })
       )

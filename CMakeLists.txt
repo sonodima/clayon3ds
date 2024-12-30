@@ -21,6 +21,8 @@ target_sources(ClayOn3DS PRIVATE
   "${SOURCE_DIR}/Layouts.c"
   "${SOURCE_DIR}/Renderer.c"
   "${SOURCE_DIR}/Renderer.h"
+  "${SOURCE_DIR}/Theme.c"
+  "${SOURCE_DIR}/Theme.h"
   "${SOURCE_DIR}/Components/Include.h"
   "${SOURCE_DIR}/Components/ListView.c"
   "${SOURCE_DIR}/Components/StatusBar.c"
