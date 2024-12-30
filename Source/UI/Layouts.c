@@ -2,9 +2,10 @@
 
 #include <clay.h>
 
-#include "Data.h"
-#include "Theme.h"
 #include "Components/Components.h"
+#include "Controls/Controls.h"
+#include "Theme.h"
+#include "Data.h"
 
 // ===========================
 // Shared State

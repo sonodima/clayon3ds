@@ -7,8 +7,8 @@
 #define CLAY_IMPLEMENTATION
 #include <clay.h>
 
+#include "UI/Theme.h"
 #include "Renderer.h"
-#include "Theme.h"
 
 #define DISPLAY_TRANSFER_FLAGS GX_TRANSFER_FLIP_VERT(0) \
 	| GX_TRANSFER_OUT_TILED(0) \

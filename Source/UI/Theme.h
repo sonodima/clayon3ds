@@ -1,5 +1,5 @@
-#ifndef __CLAYON3DS_THEME_H
-#define __CLAYON3DS_THEME_H
+#ifndef __CLAYON3DS_UI_THEME_H
+#define __CLAYON3DS_UI_THEME_H
 
 #include <clay.h>
 
@@ -33,4 +33,4 @@ AppTheme Theme_getActive();
 
 Clay_Color Theme_getColor(AppColorKey key);
 
-#endif // __CLAYON3DS_THEME_H
+#endif // __CLAYON3DS_UI_THEME_H

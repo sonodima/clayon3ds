@@ -1,6 +1,6 @@
-#include "Components.h"
+#include "Controls.h"
 
-#include "Theme.h"
+#include "UI/Theme.h"
 
 void ListView(ListView_NameFetcher nameFetcher, ListView_OnInteraction onInteraction, u32 numItems, u32 curItem)
 {

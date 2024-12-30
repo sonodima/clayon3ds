@@ -1,8 +1,6 @@
-#include "Components.h"
+#include "Controls.h"
 
-#include <stdint.h>
-
-#include "Theme.h"
+#include "UI/Theme.h"
 
 void ToggleButton_onInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
 {

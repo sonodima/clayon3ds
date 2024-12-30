@@ -1,6 +1,6 @@
 #include "Components.h"
 
-#include "Theme.h"
+#include "UI/Theme.h"
 
 void StatusBar(void)
 {
