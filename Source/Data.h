@@ -10,7 +10,7 @@ typedef struct
   Clay_String highlights;
 } CityData;
 
-static CityData CITIES[] = 
+static const CityData CITIES[] = 
 {
   {
     .name = CLAY_STRING("Paris"),

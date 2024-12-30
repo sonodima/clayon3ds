@@ -15,7 +15,6 @@ include(Clay)
 
 add_executable(ClayOn3DS)
 target_sources(ClayOn3DS PRIVATE
-  "${SOURCE_DIR}/Constants.h"
   "${SOURCE_DIR}/Data.h"
   "${SOURCE_DIR}/Entry.c"
   "${SOURCE_DIR}/Layouts.c"
@@ -23,9 +22,11 @@ target_sources(ClayOn3DS PRIVATE
   "${SOURCE_DIR}/Renderer.h"
   "${SOURCE_DIR}/Theme.c"
   "${SOURCE_DIR}/Theme.h"
-  "${SOURCE_DIR}/Components/Include.h"
+  "${SOURCE_DIR}/Utils.h"
+  "${SOURCE_DIR}/Components/Components.h"
   "${SOURCE_DIR}/Components/ListView.c"
   "${SOURCE_DIR}/Components/StatusBar.c"
+  "${SOURCE_DIR}/Components/Switch.c"
   "${SOURCE_DIR}/Components/ToggleButton.c")
 target_include_directories(ClayOn3DS PRIVATE
   "${SOURCE_DIR}"

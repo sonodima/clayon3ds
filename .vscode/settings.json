@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "theme.h": "c",
+    "components.h": "c"
+  }
+}

@@ -1,6 +1,5 @@
-#include "Include.h"
+#include "Components.h"
 
-#include "Constants.h"
 #include "Theme.h"
 
 void ListView(ListView_NameFetcher nameFetcher, ListView_OnInteraction onInteraction, u32 numItems, u32 curItem)
@@ -9,7 +8,10 @@ void ListView(ListView_NameFetcher nameFetcher, ListView_OnInteraction onInterac
     CLAY_RECTANGLE({ .color = THCOL(BASE200) }),
     CLAY_BORDER_OUTSIDE({ .width = 1, .color = THCOL(BASE100) }),
     CLAY_SCROLL({ .vertical = true }),
-    CLAY_LAYOUT({ .sizing = SIZING_GROW, .layoutDirection = CLAY_TOP_TO_BOTTOM })
+    CLAY_LAYOUT({ 
+      .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+      .layoutDirection = CLAY_TOP_TO_BOTTOM
+    })
   ) {
     for (u32 i = 0; i < numItems; ++i)
     {

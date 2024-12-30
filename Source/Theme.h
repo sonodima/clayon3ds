@@ -21,11 +21,13 @@ typedef enum
   THEME_DARK,
   THEME_LIGHT,
   THEME_NORD,
+  THEME_MACCHIATO,
   THEME_MAX,
 } AppTheme;
 
 #define THCOL(key) Theme_getColor(COLOR_##key)
 
+void Theme_updateTransition(float deltaTime);
 void Theme_setActive(AppTheme value);
 AppTheme Theme_getActive();
 

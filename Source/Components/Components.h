@@ -13,5 +13,6 @@ typedef void(*ListView_OnInteraction)(Clay_ElementId, Clay_PointerData pointer, 
 void ListView(ListView_NameFetcher nameFetcher, ListView_OnInteraction onInteraction, u32 numItems, u32 curItem);
 void StatusBar(void);
 void ToggleButton(Clay_String text, bool* value);
+void Switch(Clay_String text, bool* value);
 
 #endif // __CLAYON3DS_COMPONENTS_H

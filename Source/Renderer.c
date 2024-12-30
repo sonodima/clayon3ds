@@ -11,13 +11,13 @@
 #define GET_TEXT_SCALE(fs) ((float)fs / 30.f)
 #define CLAY_COLOR_TO_C2D(cc) C2D_Color32((u8)cc.r, (u8)cc.g, (u8)cc.b, (u8)cc.a)
 
-void clayError(Clay_ErrorData errorData)
+void Renderer_clayError(Clay_ErrorData errorData)
 {
   printf("clay_error: %s\n", errorData.errorText.chars);
 	// __builtin_trap();
 }
 
-Clay_Dimensions clayMeasureText(Clay_String* string, Clay_TextElementConfig* config)
+Clay_Dimensions Renderer_clayMeasureText(Clay_String* string, Clay_TextElementConfig* config)
 {
 	float scale = GET_TEXT_SCALE(config->fontSize);
 
@@ -40,7 +40,7 @@ Clay_Dimensions clayMeasureText(Clay_String* string, Clay_TextElementConfig* con
 	return (Clay_Dimensions){ width, height };
 }
 
-void clayRender(C3D_RenderTarget* renderTarget, Clay_Dimensions dimensions, Clay_RenderCommandArray renderCommands)
+void Renderer_clayRender(C3D_RenderTarget* renderTarget, Clay_Dimensions dimensions, Clay_RenderCommandArray renderCommands)
 {
   for (u32 i = 0; i < renderCommands.length; i++)
   {

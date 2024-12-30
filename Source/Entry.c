@@ -8,6 +8,7 @@
 #include <clay.h>
 
 #include "Renderer.h"
+#include "Theme.h"
 
 #define DISPLAY_TRANSFER_FLAGS GX_TRANSFER_FLIP_VERT(0) \
 	| GX_TRANSFER_OUT_TILED(0) \
@@ -25,8 +26,8 @@ s32 main(void)
   Clay_SetMaxElementCount(1024);
   u64 clayMemSize = Clay_MinMemorySize();
   Clay_Arena clayArena = Clay_CreateArenaWithCapacityAndMemory(clayMemSize, malloc(clayMemSize));
-	Clay_SetMeasureTextFunction(clayMeasureText);
-  Clay_Initialize(clayArena, (Clay_Dimensions){ 0, 0 }, (Clay_ErrorHandler) { clayError });
+	Clay_SetMeasureTextFunction(Renderer_clayMeasureText);
+  Clay_Initialize(clayArena, (Clay_Dimensions){ 0, 0 }, (Clay_ErrorHandler) { Renderer_clayError });
 
 	gfxInitDefault();
 
@@ -47,6 +48,8 @@ s32 main(void)
     u64 currentTime = osGetTime();
 		float deltaTime = (currentTime - previousTime) / 1000.f;
 		previousTime = currentTime;
+
+		Theme_updateTransition(deltaTime);
 
 		// ===========================
 		// Input Handling
@@ -85,7 +88,7 @@ s32 main(void)
 		Clay_Dimensions dimensions = (Clay_Dimensions){ 400, 240 };
 		Clay_SetLayoutDimensions(dimensions);
 		Clay_RenderCommandArray topCommands = topLayout();
-		clayRender(top, dimensions, topCommands);
+		Renderer_clayRender(top, dimensions, topCommands);
 
 		// ===================
 		// Bottom Screen
@@ -97,7 +100,7 @@ s32 main(void)
 		dimensions = (Clay_Dimensions){ 320, 240 };
 		Clay_SetLayoutDimensions(dimensions);
 		Clay_RenderCommandArray bottomCommands = bottomLayout();
-		clayRender(bottom, dimensions, bottomCommands);
+		Renderer_clayRender(bottom, dimensions, bottomCommands);
 
 		if (isTouching)
 		{

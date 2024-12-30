@@ -4,7 +4,7 @@
 
 #include "Theme.h"
 
-void ToggleButton_onInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
+void Switch_onInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
 {
   if (pointer.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
   {
@@ -16,10 +16,10 @@ void ToggleButton_onInteraction(Clay_ElementId element, Clay_PointerData pointer
   }
 }
 
-void ToggleButton(Clay_String text, bool* value)
+void Switch(Clay_String text, bool* value)
 {
   CLAY(
-    Clay_OnHover(ToggleButton_onInteraction, (intptr_t)value),
+    Clay_OnHover(Switch_onInteraction, (intptr_t)value),
     CLAY_LAYOUT({
       .sizing = { .width = CLAY_SIZING_FIT(), .height = CLAY_SIZING_FIT() },
       .childGap = 6,
@@ -36,8 +36,20 @@ void ToggleButton(Clay_String text, bool* value)
         .padding = { .x = 2, .y = 2 }
       })
     ) {
+      if (value != NULL && *value)
+      {
+        CLAY(
+          CLAY_LAYOUT({
+            .sizing = {
+              .width = CLAY_SIZING_FIXED(10),
+              .height = CLAY_SIZING_FIXED(10)
+            }
+          })
+        ) {}
+      }
+
       CLAY(
-        CLAY_RECTANGLE({ .color = value != NULL && *value ? THCOL(PRIMARY) : (Clay_Color){} }),
+        CLAY_RECTANGLE({ .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT) }),
         CLAY_LAYOUT({
           .sizing = {
             .width = CLAY_SIZING_FIXED(10),
@@ -45,6 +57,18 @@ void ToggleButton(Clay_String text, bool* value)
           }
         })
       ) {}
+
+      if (value == NULL || *value == false)
+      {
+        CLAY(
+          CLAY_LAYOUT({
+            .sizing = {
+              .width = CLAY_SIZING_FIXED(10),
+              .height = CLAY_SIZING_FIXED(10)
+            }
+          })
+        ) {}
+      }
     }
 
     CLAY(
