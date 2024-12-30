@@ -33,8 +33,8 @@ Clay_RenderCommandArray topLayout(void)
     })
   ) {
     CLAY(
-      CLAY_RECTANGLE({ .color = THCOL(BASE200) }),
-      CLAY_BORDER_ALL({ .width = 1, .color = THCOL(BASE100) }),
+      CLAY_RECTANGLE({ .color = THCOL(BASE200), .cornerRadius = CLAY_CORNER_RADIUS(8) }),
+      CLAY_BORDER_OUTSIDE_RADIUS(1, THCOL(BASE100), 8),
       CLAY_LAYOUT({
         .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
         .layoutDirection = CLAY_LEFT_TO_RIGHT,
