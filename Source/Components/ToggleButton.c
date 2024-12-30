@@ -34,7 +34,7 @@ void ToggleButton(Clay_String text, bool* value)
       CLAY_LAYOUT({ .sizing = SIZING_FIT, .padding = { .x = 2, .y = 2 } })
     ) {
       CLAY(
-        CLAY_RECTANGLE({ .color = value != NULL && *value ? COLOR_PRI : COLOR_BASE_100 }),
+        CLAY_RECTANGLE({ .color = value != NULL && *value ? COLOR_PRI : COLOR_TRNS }),
         CLAY_LAYOUT({
           .sizing = {
             .width = CLAY_SIZING_FIXED(10),
