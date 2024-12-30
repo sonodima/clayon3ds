@@ -26,48 +26,33 @@ void Switch(Clay_String text, bool* value)
       .layoutDirection = CLAY_LEFT_TO_RIGHT
     })
   ) {
+    static const Clay_LayoutConfig segmentLayout =
+    {
+      .sizing = { .width = CLAY_SIZING_FIXED(12), .height = CLAY_SIZING_FIXED(12) }
+    };
+
     CLAY(
       CLAY_BORDER_OUTSIDE({
         .width = 1,
         .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT)
       }),
       CLAY_LAYOUT({
-        .sizing = { .width = CLAY_SIZING_FIT(), .height = CLAY_SIZING_FIT() },
-        .padding = { .x = 2, .y = 2 }
+        .sizing = { .width = CLAY_SIZING_FIT(), .height = CLAY_SIZING_FIT() }
       })
     ) {
       if (value != NULL && *value)
       {
-        CLAY(
-          CLAY_LAYOUT({
-            .sizing = {
-              .width = CLAY_SIZING_FIXED(10),
-              .height = CLAY_SIZING_FIXED(10)
-            }
-          })
-        ) {}
+        CLAY(CLAY_LAYOUT(segmentLayout)) {}
       }
 
       CLAY(
         CLAY_RECTANGLE({ .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT) }),
-        CLAY_LAYOUT({
-          .sizing = {
-            .width = CLAY_SIZING_FIXED(10),
-            .height = CLAY_SIZING_FIXED(10)
-          }
-        })
+        CLAY_LAYOUT(segmentLayout)
       ) {}
 
       if (value == NULL || *value == false)
       {
-        CLAY(
-          CLAY_LAYOUT({
-            .sizing = {
-              .width = CLAY_SIZING_FIXED(10),
-              .height = CLAY_SIZING_FIXED(10)
-            }
-          })
-        ) {}
+        CLAY(CLAY_LAYOUT(segmentLayout)) {}
       }
     }
 
