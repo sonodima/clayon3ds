@@ -103,6 +103,7 @@ Clay_String ThemeList_NameFetcher(u32 index)
   {
   case THEME_DARK: return CLAY_STRING("Dark");
   case THEME_LIGHT: return CLAY_STRING("Light");
+  case THEME_NORD: return CLAY_STRING("Nord");
   default: return CLAY_STRING("Untitled");
   }
 }
@@ -111,7 +112,7 @@ void ThemeList_OnInteraction(Clay_ElementId, Clay_PointerData pointer, intptr_t 
 {
   if (pointer.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
   {
-    Theme_setTheme((AppTheme)data);
+    Theme_setActive((AppTheme)data);
   }
 }
 
@@ -140,7 +141,7 @@ Clay_RenderCommandArray bottomLayout(void)
       ToggleButton(CLAY_STRING("Show Info"), &showInfo);
       ToggleButton(CLAY_STRING("Hide Status Bar"), &hideStatusBar);
 
-      ListView(ThemeList_NameFetcher, ThemeList_OnInteraction, THEME_MAX, (u32)Theme_getTheme());
+      ListView(ThemeList_NameFetcher, ThemeList_OnInteraction, THEME_MAX, (u32)Theme_getActive());
     }
   }
 

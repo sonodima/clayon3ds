@@ -18,15 +18,16 @@ typedef enum
 
 typedef enum
 {
-  THEME_LIGHT,
   THEME_DARK,
+  THEME_LIGHT,
+  THEME_NORD,
   THEME_MAX,
 } AppTheme;
 
 #define THCOL(key) Theme_getColor(COLOR_##key)
 
-void Theme_setTheme(AppTheme value);
-AppTheme Theme_getTheme();
+void Theme_setActive(AppTheme value);
+AppTheme Theme_getActive();
 
 Clay_Color Theme_getColor(AppColorKey key);
 

@@ -4,12 +4,12 @@ static const Clay_Color THEME_DARK_DATA[COLOR_MAX] =
 {
   { 48, 48, 48, 255 },     // COLOR_BASE100
   { 32, 32, 32, 255 },     // COLOR_BASE200
-  { 18, 18, 18, 255 },  // COLOR_BASE300
+  { 18, 18, 18, 255 },     // COLOR_BASE300
   { 210, 210, 210, 255 },  // COLOR_BASE_CONTENT
   { 183, 197, 141, 255 },  // COLOR_PRIMARY
   { 0, 0, 0, 255 },        // COLOR_PRIMARY_CONTENT
   { 255, 248, 193, 255 },  // COLOR_SECONDARY
-  { 0, 0, 0, 255 }         // COLOR_SECONDARY_CONTENT
+  { 0, 0, 0, 255 },        // COLOR_SECONDARY_CONTENT
 };
 
 static const Clay_Color THEME_LIGHT_DATA[COLOR_MAX] =
@@ -21,13 +21,25 @@ static const Clay_Color THEME_LIGHT_DATA[COLOR_MAX] =
   { 49, 79, 117, 255 },    // COLOR_PRIMARY
   { 255, 255, 255, 255 },  // COLOR_PRIMARY_CONTENT
   { 125, 105, 55, 255 },   // COLOR_SECONDARY
-  { 255, 255, 255, 255 }   // COLOR_SECONDARY_CONTENT
+  { 255, 255, 255, 255 },  // COLOR_SECONDARY_CONTENT
+};
+
+static const Clay_Color THEME_NORD_DATA[COLOR_MAX] =
+{
+  { 67, 76, 94, 255 },     // COLOR_BASE100
+  { 59, 66, 82, 255 },     // COLOR_BASE200
+  { 46, 52, 64, 255 },     // COLOR_BASE300
+  { 236, 239, 244, 255 },  // COLOR_BASE_CONTENT
+  { 94, 129, 172, 255 },   // COLOR_PRIMARY
+  { 46, 52, 64, 255 },     // COLOR_PRIMARY_CONTENT
+  { 143, 188, 187, 255 },  // COLOR_SECONDARY
+  { 46, 52, 64, 255 },     // COLOR_SECONDARY_CONTENT
 };
 
 static AppTheme curTheme = THEME_DARK;
 static Clay_Color* curColors = THEME_DARK_DATA;
 
-void Theme_setTheme(AppTheme value)
+void Theme_setActive(AppTheme value)
 {
   if (value >= 0 && value < THEME_MAX)
   {
@@ -40,11 +52,14 @@ void Theme_setTheme(AppTheme value)
     case THEME_LIGHT:
       curColors = THEME_LIGHT_DATA;
       break;
+    case THEME_NORD:
+      curColors = THEME_NORD_DATA;
+      break;
     }
   }
 }
 
-AppTheme Theme_getTheme()
+AppTheme Theme_getActive()
 {
   return curTheme;
 }
