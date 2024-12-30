@@ -1,5 +1,7 @@
 #include "Controls.h"
 
+#include <float.h>
+
 #include "UI/Theme.h"
 
 void Switch_onInteraction(Clay_ElementId element, Clay_PointerData pointer, intptr_t data)
@@ -21,21 +23,19 @@ void Switch(Clay_String text, bool* value)
     CLAY_LAYOUT({
       .sizing = { .width = CLAY_SIZING_FIT(), .height = CLAY_SIZING_FIT() },
       .childGap = 6,
-      .layoutDirection = CLAY_LEFT_TO_RIGHT
+      .layoutDirection = CLAY_LEFT_TO_RIGHT,
     })
   ) {
     static const Clay_LayoutConfig segmentLayout =
     {
-      .sizing = { .width = CLAY_SIZING_FIXED(12), .height = CLAY_SIZING_FIXED(12) }
+      .sizing = { .width = CLAY_SIZING_FIXED(10), .height = CLAY_SIZING_FIXED(10) }
     };
 
     CLAY(
-      CLAY_BORDER_OUTSIDE({
-        .width = 1,
-        .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT)
-      }),
+      CLAY_BORDER_OUTSIDE_RADIUS(1, value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT), FLT_MAX),
       CLAY_LAYOUT({
-        .sizing = { .width = CLAY_SIZING_FIT(), .height = CLAY_SIZING_FIT() }
+        .sizing = { .width = CLAY_SIZING_FIT(), .height = CLAY_SIZING_FIT() },
+        .padding = { .x = 4, .y = 4 }
       })
     ) {
       if (value != NULL && *value)
@@ -44,7 +44,10 @@ void Switch(Clay_String text, bool* value)
       }
 
       CLAY(
-        CLAY_RECTANGLE({ .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT) }),
+        CLAY_RECTANGLE({
+          .color = value != NULL && *value ? THCOL(PRIMARY) : THCOL(BASE_CONTENT),
+          .cornerRadius = CLAY_CORNER_RADIUS(32)
+        }),
         CLAY_LAYOUT(segmentLayout)
       ) {}
 

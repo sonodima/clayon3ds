@@ -96,45 +96,57 @@ void Renderer_clayRender(C3D_RenderTarget* renderTarget, Clay_Dimensions dimensi
       case CLAY_RENDER_COMMAND_TYPE_RECTANGLE:
       {
         Clay_RectangleElementConfig* config = renderCommand->config.rectangleElementConfig;
-				Clay_CornerRadius radius = config->cornerRadius;
 				u32 color = CLAY_COLOR_TO_C2D(config->color);
-				
-				if (radius.topLeft <= 0.f && radius.topRight <= 0.f && radius.bottomRight <= 0.f && radius.bottomLeft <= 0.f)
+				float tlr = config->cornerRadius.topLeft;
+				float trr = config->cornerRadius.topRight;
+				float brr = config->cornerRadius.bottomRight;
+				float blr = config->cornerRadius.bottomLeft;
+
+				if (tlr <= 0.f && trr <= 0.f && brr <= 0.f && blr <= 0.f)
 				{
+					// If no rounding is used, fall back to the faster, simpler, rectangle drawing.
  					C2D_DrawRectSolid(bbox.x, bbox.y, 0.f, bbox.width, bbox.height, color);
 				}
 				else
 				{
-					// Holy Moly! We need to do the hard work :(
-					float lx = bbox.x;
-					float ly1 = bbox.y + radius.topLeft;
-					float ly2 = bbox.y + bbox.height - radius.bottomLeft;
-					float ty = bbox.y;
-					float tx1 = bbox.x + radius.topLeft;
-					float tx2 = bbox.x + bbox.width - radius.topRight;
-					float rx = bbox.x + bbox.width;
-					float ry1 = bbox.y + radius.topRight;
-					float ry2 = bbox.y + bbox.height - radius.bottomRight;
-					float by = bbox.y + bbox.height;
-					float bx1 = bbox.x + radius.bottomLeft;
-					float bx2 = bbox.x + bbox.width - radius.bottomRight;
+					// Make sure that the rounding is not bigger than half of any side.
+					float max = fminf(bbox.width, bbox.height) / 2.f;
+					tlr = fminf(tlr, max);
+					trr = fminf(trr, max);
+					brr = fminf(brr, max);
+					blr = fminf(blr, max);
 
-					C2D_DrawTriangle(lx, ly1, color, bbox.x + radius.topLeft, ly1, color, lx, ly2, color, 0.f);
-					C2D_DrawTriangle(bbox.x + radius.bottomLeft, ly2, color, bbox.x + radius.topLeft, ly1, color, lx, ly2, color, 0.f);
-					C2D_DrawTriangle(tx1, ty, color, tx1, bbox.y + radius.topLeft, color, tx2, ty, color, 0.f);
-					C2D_DrawTriangle(tx2, bbox.y + radius.topRight, color, tx1, bbox.y + radius.topLeft, color, tx2, ty, color, 0.f);
-					C2D_DrawTriangle(rx, ry1, color, bbox.x + bbox.width - radius.topRight, ry1, color, rx, ry2, color, 0.f);
-					C2D_DrawTriangle(bbox.x + bbox.width - radius.bottomRight, ry2, color, bbox.x + bbox.width - radius.topRight, ry1, color, rx, ry2, color, 0.f);
-					C2D_DrawTriangle(bx1, by, color, bx1, bbox.y + bbox.height - radius.bottomLeft, color, bx2, by, color, 0.f);
-					C2D_DrawTriangle(bx2, bbox.y + bbox.height - radius.bottomRight, color, bx1, bbox.y + bbox.height - radius.bottomLeft, color, bx2, by, color, 0.f);
+					// Holy Moly!
+					// This is cryptic as fuck but it works well.
+					float lx = bbox.x;
+					float ly1 = bbox.y + tlr;
+					float ly2 = bbox.y + bbox.height - blr;
+					float ty = bbox.y;
+					float tx1 = bbox.x + tlr;
+					float tx2 = bbox.x + bbox.width - trr;
+					float rx = bbox.x + bbox.width;
+					float ry1 = bbox.y + trr;
+					float ry2 = bbox.y + bbox.height - brr;
+					float by = bbox.y + bbox.height;
+					float bx1 = bbox.x + blr;
+					float bx2 = bbox.x + bbox.width - brr;
+
+					C2D_DrawTriangle(lx, ly1, color, bbox.x + tlr, ly1, color, lx, ly2, color, 0.f);
+					C2D_DrawTriangle(bbox.x + blr, ly2, color, bbox.x + tlr, ly1, color, lx, ly2, color, 0.f);
+					C2D_DrawTriangle(tx1, ty, color, tx1, bbox.y + tlr, color, tx2, ty, color, 0.f);
+					C2D_DrawTriangle(tx2, bbox.y + trr, color, tx1, bbox.y + tlr, color, tx2, ty, color, 0.f);
+					C2D_DrawTriangle(rx, ry1, color, bbox.x + bbox.width - trr, ry1, color, rx, ry2, color, 0.f);
+					C2D_DrawTriangle(bbox.x + bbox.width - brr, ry2, color, bbox.x + bbox.width - trr, ry1, color, rx, ry2, color, 0.f);
+					C2D_DrawTriangle(bx1, by, color, bx1, bbox.y + bbox.height - blr, color, bx2, by, color, 0.f);
+					C2D_DrawTriangle(bx2, bbox.y + bbox.height - brr, color, bx1, bbox.y + bbox.height - blr, color, bx2, by, color, 0.f);
 
 					C2D_DrawTriangle(tx2, ry1, color, tx1, ly1, color, bx2, ry2, color, 0.f);
 					C2D_DrawTriangle(bx1, ly2, color, tx1, ly1, color, bx2, ry2, color, 0.f);
 
-					drawArcSolid(bbox.x + radius.topLeft, bbox.y + radius.topLeft, radius.topLeft, 180.f, 270.f, color);
-					drawArcSolid(bbox.x + bbox.width - radius.topRight, bbox.y + radius.topRight, radius.topRight, 270.f, 360.f, color);
-					drawArcSolid(bbox.x + radius.bottomLeft, bbox.y + bbox.height - radius.bottomLeft, radius.bottomLeft, 90.f, 180.f, color);
-					drawArcSolid(bbox.x + bbox.width - radius.bottomRight, bbox.y + bbox.height - radius.bottomRight, radius.bottomRight, 0.f, 90.f, color);
+					drawArcSolid(bbox.x + tlr, bbox.y + tlr, tlr, 180.f, 270.f, color);
+					drawArcSolid(bbox.x + bbox.width - trr, bbox.y + trr, trr, 270.f, 360.f, color);
+					drawArcSolid(bbox.x + blr, bbox.y + bbox.height - blr, blr, 90.f, 180.f, color);
+					drawArcSolid(bbox.x + bbox.width - brr, bbox.y + bbox.height - brr, brr, 0.f, 90.f, color);
 				}
 
 				break;
@@ -142,80 +154,54 @@ void Renderer_clayRender(C3D_RenderTarget* renderTarget, Clay_Dimensions dimensi
 			case CLAY_RENDER_COMMAND_TYPE_BORDER:
 			{
         Clay_BorderElementConfig* config = renderCommand->config.borderElementConfig;
-				Clay_CornerRadius radius = config->cornerRadius;
+				u32 tc = CLAY_COLOR_TO_C2D(config->top.color);
+				u32 lc = CLAY_COLOR_TO_C2D(config->left.color);
+				u32 rc = CLAY_COLOR_TO_C2D(config->right.color);
+				u32 bc = CLAY_COLOR_TO_C2D(config->bottom.color);
+				float lw = config->left.width;
+				float tw = config->top.width;
+				float rw = config->right.width;
+				float bw = config->bottom.width;
+				// Make sure that the rounding is not bigger than half of any side.
+				float max = fminf(bbox.width, bbox.height) / 2.f;
+				float tlr = fminf(config->cornerRadius.topLeft, max);
+				float trr = fminf(config->cornerRadius.topRight, max);
+				float brr = fminf(config->cornerRadius.bottomRight, max);
+				float blr = fminf(config->cornerRadius.bottomLeft, max);
 
-				if (config->top.width > 0)
+				if (config->top.width > 0.f)
 				{
-					C2D_DrawRectSolid(bbox.x + radius.topLeft,
-														bbox.y,
-														0.f,
-														bbox.width - radius.topLeft - radius.topRight,
-														config->top.width,
-														CLAY_COLOR_TO_C2D(config->top.color));
+					C2D_DrawRectSolid(bbox.x + tlr, bbox.y, 0.f, bbox.width - tlr - trr, tw, tc);
 				}
-				if (config->left.width > 0)
+				if (config->left.width > 0.f)
 				{
-					C2D_DrawRectSolid(bbox.x,
-					                  bbox.y + radius.topLeft,
-														0.f,
-														config->left.width,
-														bbox.height - radius.topLeft - radius.bottomLeft,
-														CLAY_COLOR_TO_C2D(config->left.color));
+					C2D_DrawRectSolid(bbox.x, bbox.y + tlr, 0.f, lw, bbox.height - tlr - blr, lc);
 				}
-				if (config->right.width > 0)
+				if (config->right.width > 0.f)
 				{
-					C2D_DrawRectSolid(bbox.x + bbox.width - config->right.width,
-					                  bbox.y + radius.topRight,
-														0.f,
-														config->right.width,
-														bbox.height - radius.topRight - radius.bottomRight,
-														CLAY_COLOR_TO_C2D(config->right.color));
+					C2D_DrawRectSolid(bbox.x + bbox.width - rw, bbox.y + trr, 0.f, rw, bbox.height - trr - brr, rc);
 				}
-				if (config->bottom.width > 0)
+				if (config->bottom.width > 0.f)
 				{
-					C2D_DrawRectSolid(bbox.x + radius.bottomLeft,
-					                  bbox.y + bbox.height - config->bottom.width,
-														0.f,
-														bbox.width - radius.bottomLeft - radius.bottomRight,
-														config->bottom.width,
-														CLAY_COLOR_TO_C2D(config->bottom.color));
+					C2D_DrawRectSolid(bbox.x + brr, bbox.y + bbox.height - bw, 0.f, bbox.width - blr - brr, bw, bc);
 				}
-				if (radius.topLeft > 0)
+				if (tlr > 0)
 				{
-					drawArc(bbox.x + radius.topLeft,
-					        bbox.y + radius.topLeft,
-									radius.topLeft - config->top.width / 2.f,
-									180.f, 270.f,
-									config->top.width,
-									CLAY_COLOR_TO_C2D(config->top.color));
+					drawArc(bbox.x + tlr, bbox.y + tlr, tlr - tw / 2.f, 180.f, 270.f, tw, tc);
 				}
-				if (radius.topRight > 0)
+				if (trr > 0)
 				{
-					drawArc(bbox.x + bbox.width - radius.topRight,
-					        bbox.y + radius.topRight,
-									radius.topRight - config->top.width / 2.f,
-									270.f, 360.f,
-									config->top.width,
-									CLAY_COLOR_TO_C2D(config->top.color));
+					drawArc(bbox.x + bbox.width - trr, bbox.y + trr, trr - tw / 2.f, 270.f, 360.f, tw, tc);
 				}
-				if (radius.bottomLeft > 0)
+				if (blr > 0)
 				{
-					drawArc(bbox.x + radius.bottomLeft,
-					        bbox.y + bbox.height - radius.bottomLeft,
-									radius.bottomLeft - config->bottom.width / 2.f,
-									90.f, 180.f,
-									config->bottom.width,
-									CLAY_COLOR_TO_C2D(config->bottom.color));
+					drawArc(bbox.x + blr, bbox.y + bbox.height - blr, blr - bw / 2.f, 90.f, 180.f, bw, bc);
 				}
-				if (radius.bottomRight > 0)
+				if (brr > 0)
 				{
-					drawArc(bbox.x + bbox.width - radius.bottomRight,
-					        bbox.y + bbox.height - radius.bottomRight,
-									radius.bottomRight - config->bottom.width / 2.f,
-									0.f, 90.f,
-									config->bottom.width,
-									CLAY_COLOR_TO_C2D(config->bottom.color));
+					drawArc(bbox.x + bbox.width - brr, bbox.y + bbox.height - brr, brr - bw / 2.f, 0.f, 90.f, bw, bc);
 				}
+
         break;
 			}
 			case CLAY_RENDER_COMMAND_TYPE_TEXT:
