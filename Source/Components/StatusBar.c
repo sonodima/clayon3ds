@@ -17,7 +17,7 @@ void StatusBar(void)
     CLAY(
       CLAY_TEXT(
         CLAY_STRING("ClayOn3DS by sonodima"),
-        CLAY_TEXT_CONFIG({ .textColor = COLOR_PRI_D, .fontSize = 14 })
+        CLAY_TEXT_CONFIG({ .textColor = COLOR_PRI, .fontSize = 14 })
       )
     ) {}
   }

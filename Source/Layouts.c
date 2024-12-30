@@ -23,8 +23,8 @@ Clay_RenderCommandArray topLayout(void)
   Clay_BeginLayout();
 
   CLAY(
-    CLAY_RECTANGLE({ .color = COLOR_BLK }),
-    CLAY_BORDER({ .bottom = { .width = 2, .color = COLOR_PRI_L } }),
+    CLAY_RECTANGLE({ .color = COLOR_BASE_300 }),
+    CLAY_BORDER({ .bottom = { .width = 2, .color = COLOR_PRI } }),
     CLAY_LAYOUT({
       .sizing = SIZING_GROW,
       .padding = { .x = 8, .y = 8 },
@@ -32,8 +32,8 @@ Clay_RenderCommandArray topLayout(void)
     })
   ) {
     CLAY(
-      CLAY_RECTANGLE({ .color = COLOR_SURF }),
-      CLAY_BORDER_ALL({ .width = 1, .color = COLOR_PRI_L }),
+      CLAY_RECTANGLE({ .color = COLOR_BASE_200 }),
+      CLAY_BORDER_ALL({ .width = 1, .color = COLOR_BASE_100 }),
       CLAY_LAYOUT({
         .sizing = SIZING_GROW,
         .layoutDirection = CLAY_LEFT_TO_RIGHT,
@@ -45,7 +45,7 @@ Clay_RenderCommandArray topLayout(void)
         CLAY_ID("CONTENT_VIEW"),
         CLAY_TEXT(
           CITIES[curCityIndex].introduction,
-          CLAY_TEXT_CONFIG({ .textColor = COLOR_TEXT, .fontSize = 16 })
+          CLAY_TEXT_CONFIG({ .textColor = COLOR_BASE_CON, .fontSize = 16 })
         ),
           CLAY_LAYOUT({
             .sizing = { 
@@ -61,7 +61,7 @@ Clay_RenderCommandArray topLayout(void)
           CLAY_ID("INFO_VIEW"),
           CLAY_TEXT(
             CITIES[curCityIndex].highlights,
-            CLAY_TEXT_CONFIG({ .textColor = COLOR_TEXT, .fontSize = 14 })
+            CLAY_TEXT_CONFIG({ .textColor = COLOR_BASE_CON, .fontSize = 14 })
           ),
           CLAY_LAYOUT({
             .sizing = { .width = CLAY_SIZING_PERCENT(.5f), .height = CLAY_SIZING_GROW() }
@@ -101,7 +101,7 @@ Clay_RenderCommandArray bottomLayout(void)
   Clay_BeginLayout();
 
   CLAY(
-    CLAY_RECTANGLE({ .color = COLOR_BLK }),
+    CLAY_RECTANGLE({ .color = COLOR_BASE_300 }),
     CLAY_LAYOUT({
       .sizing = SIZING_GROW,
       .padding = { .x = 8, .y = 8 },

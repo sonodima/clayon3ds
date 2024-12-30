@@ -20,18 +20,35 @@ void ToggleButton(Clay_String text, bool* value)
 {
   CLAY(
     Clay_OnHover(ToggleButton_OnInteraction, (intptr_t)value),
-    CLAY_BORDER_OUTSIDE({ .width = 1, .color = COLOR_PRI_L }),
-    CLAY_RECTANGLE({ .color = value != NULL && *value ? COLOR_PRI_L : COLOR_BLK }),
     CLAY_LAYOUT({
-      .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIT() },
-      .padding = { .x = 8, .y = 4 }
+      .sizing = SIZING_FIT,
+      .childGap = 6,
+      .layoutDirection = CLAY_LEFT_TO_RIGHT
     })
   ) {
+    CLAY(
+      CLAY_BORDER_OUTSIDE({
+        .width = 1,
+        .color = value != NULL && *value ? COLOR_PRI : COLOR_BASE_CON
+      }),
+      CLAY_LAYOUT({ .sizing = SIZING_FIT, .padding = { .x = 2, .y = 2 } })
+    ) {
+      CLAY(
+        CLAY_RECTANGLE({ .color = value != NULL && *value ? COLOR_PRI : COLOR_BASE_100 }),
+        CLAY_LAYOUT({
+          .sizing = {
+            .width = CLAY_SIZING_FIXED(10),
+            .height = CLAY_SIZING_FIXED(10)
+          }
+        })
+      ) {}
+    }
+
     CLAY(
       CLAY_TEXT(
         text,
         CLAY_TEXT_CONFIG({
-          .textColor = value != NULL && *value ? COLOR_BLK : COLOR_PRI_L,
+          .textColor = value != NULL && *value ? COLOR_PRI : COLOR_BASE_CON,
           .fontSize = 16
         })
       )
