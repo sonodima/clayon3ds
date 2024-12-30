@@ -37,7 +37,7 @@ static const Clay_Color THEME_NORD_DATA[COLOR_MAX] =
 };
 
 static AppTheme curTheme = THEME_DARK;
-static Clay_Color* curColors = THEME_DARK_DATA;
+static const Clay_Color* curColors = THEME_DARK_DATA;
 
 void Theme_setActive(AppTheme value)
 {
